@@ -2,7 +2,7 @@
 
 . /common.sh
 
-HOSTNAME="MyVPS"
+HOSTNAME="vps.bluedhost.tech"
 HISTORY_FILE="${HOME}/.custom_shell_history"
 MAX_HISTORY=1000
 
