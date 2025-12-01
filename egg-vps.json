@@ -10,8 +10,8 @@
     "description": "A powerful and lightweight Virtual Private Server (VPS) egg for Pterodactyl Panel.\r\nSee: https:\/\/github.com\/Atelloblue\/Pterodactyl-VPS-Egg",
     "features": null,
     "docker_images": {
-        "Quay.io": "quay.io\/Atelloblue\/pterodactyl-vps-egg:latest",
-        "Docker Hub": "Atelloblue\/pterodactyl-vps-egg:latest",
+        "Quay.io": "quay.io\/ydrag0n\/pterodactyl-vps-egg:latest",
+        "Docker Hub": "ydrag0n\/pterodactyl-vps-egg:latest",
         "GitHub Container Registry": "ghcr.io\/ysdragon\/pterodactyl-vps-egg:latest"
     },
     "file_denylist": [],
@@ -25,7 +25,7 @@
     "scripts": {
         "installation": {
             "script": "#!\/bin\/bash\r\n\r\ncd \/mnt\/server\/",
-            "container": "quay.io\/Atelloblue\/pterodactyl-vps-egg",
+            "container": "quay.io\/ydrag0n\/pterodactyl-vps-egg",
             "entrypoint": "bash"
         }
     },
