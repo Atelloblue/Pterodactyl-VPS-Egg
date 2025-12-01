@@ -1,22 +1,30 @@
 #!/bin/sh
-# Sleep for 2 seconds to ensure container is ready
+
+# Give container time to settle
 sleep 2
 
-cd /home/container
-MODIFIED_STARTUP=$(eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g'))
+cd /home/container || exit 1
 
-# Make internal Docker IP address available to processes.
-export INTERNAL_IP=$(ip route get 1 | awk '{print $NF;exit}')
+# Expand variables inside the startup string
+MODIFIED_STARTUP=$(printf "%s" "$STARTUP" \
+    | sed 's/{{/${/g; s/}}/}/g' \
+    | eval echo)
 
-# Check if already installed
-if [ ! -e "$HOME/.installed" ]; then
+# Provide internal Docker IP to processes
+export INTERNAL_IP="$(ip route get 1 | awk 'NF {print $NF; exit}')"
+
+# First-time installation
+if [ ! -f "$HOME/.installed" ]; then
     /usr/local/bin/proot \
-    --rootfs="/" \
-    -0 -w "/root" \
-    -b /dev -b /sys -b /proc \
-    --kill-on-exit \
-    /bin/sh "/install.sh" || exit 1
+        --rootfs="/" \
+        -0 \
+        -w "/root" \
+        -b /dev \
+        -b /sys \
+        -b /proc \
+        --kill-on-exit \
+        /bin/sh "/install.sh" || exit 1
 fi
 
-# Run the startup helper script
+# Run startup helper
 sh /helper.sh
